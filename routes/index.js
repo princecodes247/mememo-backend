@@ -35,7 +35,9 @@ router.get("/meme/create", (req, res) => {
     let newMeme = new Meme({
       owner: "me",
       title: "first",
-      img: "124"
+      img: "124", 
+      tags: [],
+      categories: [],
     }).save().then((meme) => {
       console.log("create")
       res.json(meme)
@@ -74,7 +76,7 @@ router.get("/meme/comment", (req, res) => {
       owner: "me",
       body: "qwr"
     }
-    meme.comment.push(comment)
+    meme.comments.push(comment)
 
     meme.save().then((meme) => {
       console.log("comment")
