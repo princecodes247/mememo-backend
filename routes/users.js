@@ -44,7 +44,7 @@ router.post("/register", (req, res) => {
     User.findOne({ username: username }).then((user) => {
       if (user) {
         errors.push({ msg: "Username is already taken" });
-        res.render("register", {
+        res.json({
           errors,
           username,
           password,
@@ -64,15 +64,14 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then((user) => {
-                req.flash(
-                  "success_msg",
-                  "You are now registered and can log in"
-                );
+                // req.flash(
+                //   "success_msg",
+                //   "You are now registered and can log in"
+                // );
                 req.login(user, (err) => {
                   if (err) {
                     console.log(err);
                   }
-                  res.redirect("/dashboard");
                 });
               })
               .catch((err) => console.log(err));
@@ -86,8 +85,8 @@ router.post("/register", (req, res) => {
 // Login
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/users/login",
+    successRedirect: "/getUser",
+    failureRedirect: "/noUser",
     failureFlash: true,
   })(req, res, next);
 });
