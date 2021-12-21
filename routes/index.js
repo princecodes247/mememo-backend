@@ -60,7 +60,8 @@ router.get("/meme/update", (req, res) => {
 // Like a meme
 router.get("/meme/like", (req, res) => {
      Meme.findOne().then(meme => {
-    meme.likes.push("id")
+      let id = "id"
+      !meme.likes.includes(id) ? meme.likes.push(id) : meme.likes.splice(meme.likes.indexOf(id))
 
     meme.save().then((meme) => {
       console.log("like")
@@ -86,8 +87,8 @@ router.get("/meme/comment", (req, res) => {
 });
 
 // Delete a meme from db
-router.delete("/meme/delete", ensureAuthenticated, (req, res) => {
-  Meme.findByIdAndRemove("61c22f973d459e17002ce2ca", () => {
+router.get("/meme/delete", (req, res) => {
+  Meme.findByIdAndDelete("61c22f973d459e17002ce2ca", () => {
     console.log("Meme deleted")
   })
 });
