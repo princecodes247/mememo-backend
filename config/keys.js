@@ -1,5 +1,5 @@
 //OFFLINE USE
-dbPassword = process.env.DB_KEY || "mongodb://127.0.0.1/firsttime";
+dbPassword = process.env.DB_KEY || "mongodb://127.0.0.1/mememo";
 
 module.exports = {
   mongoURI: dbPassword,

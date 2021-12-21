@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
 const User = require("../models/User");
+const Meme = require("../models/Meme");
 
 
 
@@ -9,77 +10,54 @@ const User = require("../models/User");
 // Welcome Page
 router.get("/", forwardAuthenticated, (req, res) => res.render("welcome"));
 
-router.get("/stats", (req, res) => {
-  User.countDocuments()
-    .then(userCount => {
-
-      res.render("stats", {
-        userCount
-      })
-    })
-    .catch(err => console.log(err))
+// Fetch top memes Page
+router.get("/memes", ensureAuthenticated, (req, res) => {
+    console.log("sss")
 });
 
-//User Quiz
-router.get("/user/:username", (req, res) => {
-
-  User.findOne({ username: req.params.username }).then((person) => {
-    if (person) {
-      res.render("quiz", {
-        user: req.user,
-        person: person.name,
-      });
-    } else {
-      res.render("404");
-    }
-  })
-    .catch(err => console.log(err))
+// Fetch top memes Page
+router.get("/memes/:categories", ensureAuthenticated, (req, res) => {
+    console.log("sss")
 });
-router.post("/user/:username", (req, res) => {
 
-  User.findOne({ username: req.params.username }).then((person) => {
-    if (person) {
-      message = req.body
-      person.messages.push(message)
-      person.save().then(
-        res.json({
-          message: "Answers sent successfully now it's your turn"
-        })
-      )
-        .catch(err => console.log(err))
-    } else {
+// Add a meme to db
+router.post("/meme/add", ensureAuthenticated, (req, res) => {
 
-      res.json({
-        message: "not found"
-      })
-    }
-  })
 });
+
+// Update a meme
+router.post("/meme/update", ensureAuthenticated, (req, res) => {
+
+});
+
+// Like a meme
+router.post("/meme/like", ensureAuthenticated, (req, res) => {
+
+});
+
+// Comment on a meme
+router.post("/meme/comment", ensureAuthenticated, (req, res) => {
+
+});
+
+// Delete a meme from db
+router.delete("/meme/delete", ensureAuthenticated, (req, res) => {
+
+});
+
+
+
+// Dashboard
+router.get("/user", ensureAuthenticated, (req, res) =>
+  {
+    console.log({user: req.user})
+  }
+);
 
 router.get("/login", forwardAuthenticated, (req, res) => res.redirect("/users/login"));
 router.get("/register", forwardAuthenticated, (req, res) => res.redirect("/users/register"));
 router.get("/signup", forwardAuthenticated, (req, res) => res.redirect("/users/register"));
 
-
-
-// Dashboard
-router.get("/dashboard", ensureAuthenticated, (req, res) =>
-  res.render("dashboard", {
-    user: req.user,
-  })
-);
-
-router.get("/messages", ensureAuthenticated, (req, res) => {
-
-  User.findOne({ username: req.user.username }).then((person) => {
-    if (person) {
-      res.json({
-        messages: person.messages
-      })
-    }
-  })
-    .catch(err => console.log(err))
-});
 
 
 //404

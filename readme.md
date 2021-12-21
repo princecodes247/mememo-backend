@@ -13,9 +13,11 @@ Mememo is an easy way to create, generate and find memes.
 []	Setup suspend user
 []	Setup user details
 
-### MEME STORAGE
+### MEMES
 []	Setup add meme route
 []	Setup delete meme route
+[]	Setup add comment
+[]	Setup likes
 
 ### MEME RANKING
 []	Setup ranking algo. Rank memes based on [ New(Date added), Popular(Likes and comments)]
@@ -30,3 +32,11 @@ Mememo is an easy way to create, generate and find memes.
 []	Setup Notifications
 []	Setup user followers
 
+### ADMIN
+[]	Setup Stats [ Total memes count, memes count by category, category growth, user count]
+[]	Setup user suspend
+
+
+### EXTRAS
+[]	Add suspend variable to user model
+[]	Add meme of the day, week and year
