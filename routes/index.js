@@ -8,41 +8,86 @@ const Meme = require("../models/Meme");
 
 
 // Welcome Page
-router.get("/", forwardAuthenticated, (req, res) => res.render("welcome"));
+router.get("/", forwardAuthenticated, (req, res) => res.json("welcome"));
+
+
+
 
 // Fetch top memes Page
-router.get("/memes", ensureAuthenticated, (req, res) => {
-    console.log("sss")
+router.get("/memes", (req, res) => {
+    const { 
+      skip = 0, 
+      limit = 10,
+      categories = [], 
+      tags = [], 
+      owner = "",
+
+    } = req.query
+
+    Meme.find().then(memes => {
+      res.json(memes)
+    })
 });
 
-// Fetch top memes Page
-router.get("/memes/:categories", ensureAuthenticated, (req, res) => {
-    console.log("sss")
-});
 
 // Add a meme to db
-router.post("/meme/add", ensureAuthenticated, (req, res) => {
+router.get("/meme/create", (req, res) => {
+    let newMeme = new Meme({
+      owner: "me",
+      title: "first",
+      img: "124"
+    }).save().then((meme) => {
+      console.log("create")
+      res.json(meme)
+    })
 
 });
 
 // Update a meme
-router.post("/meme/update", ensureAuthenticated, (req, res) => {
+router.get("/meme/update", (req, res) => {
+  Meme.findById("61c22f973d459e17002ce2ca").then(meme => {
+    meme.title = meme.title + "o"
 
+    meme.save().then((meme) => {
+      console.log("updated")
+      res.json(meme)
+    })
+  })
 });
 
 // Like a meme
-router.post("/meme/like", ensureAuthenticated, (req, res) => {
+router.get("/meme/like", (req, res) => {
+     Meme.findOne().then(meme => {
+    meme.likes.push("id")
 
+    meme.save().then((meme) => {
+      console.log("like")
+      res.json(meme)
+    })
+  })
 });
 
 // Comment on a meme
-router.post("/meme/comment", ensureAuthenticated, (req, res) => {
+router.get("/meme/comment", (req, res) => {
+  Meme.findOne().then(meme => {
+    let comment = {
+      owner: "me",
+      body: "qwr"
+    }
+    meme.comment.push(comment)
 
+    meme.save().then((meme) => {
+      console.log("comment")
+      res.json(meme)
+    })
+  })
 });
 
 // Delete a meme from db
 router.delete("/meme/delete", ensureAuthenticated, (req, res) => {
-
+  Meme.findByIdAndRemove("61c22f973d459e17002ce2ca", () => {
+    console.log("Meme deleted")
+  })
 });
 
 

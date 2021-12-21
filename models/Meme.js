@@ -21,6 +21,10 @@ const MemeSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+   tags: {
+    type: Array,
+    default: [],
+  },
   date: {
     type: Date,
     default: Date.now,
