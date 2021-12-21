@@ -29,6 +29,23 @@ router.get("/memes", (req, res) => {
     })
 });
 
+// Search for memes
+router.get("/memes", (req, res) => {
+    const { 
+      skip = 0, 
+      limit = 10,
+      categories = [], 
+      tags = [], 
+      owner = "",
+
+    } = req.query
+
+    Meme.find().then(memes => {
+      res.json(memes)
+    })
+});
+
+
 
 // Add a meme to db
 router.get("/meme/create", (req, res) => {

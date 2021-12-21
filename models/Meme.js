@@ -17,6 +17,10 @@ const MemeSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+   dislikes: {
+    type: Array,
+    default: [],
+  },
    comments: {
     type: Array,
     default: [],
@@ -35,6 +39,7 @@ const MemeSchema = new mongoose.Schema({
   },
 });
 MemeSchema.index({ name: "text" });
+// MemeSchema.methods.
 const Meme = mongoose.model("Meme", MemeSchema);
 
 module.exports = Meme;
